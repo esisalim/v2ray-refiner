@@ -1,27 +1,19 @@
+import { readFileSync } from 'fs';
 import http from 'http';
-import { readFile } from 'fs/promises';
+import path from 'path';
 
-const port = process.env.PORT || 3000;
+const html = readFileSync(path.join('assets', 'index.html'), 'utf-8');
+const js = readFileSync(path.join('assets', 'script.js'), 'utf-8');
 
-const requestListener = async function (req, res) {
-  try {
-    const content = await readFile('./tls_worker.js', 'utf-8');
-
-    res.writeHead(200, {
-      'Content-Type': 'application/javascript',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
-    });
-
-    res.end(content);
-  } catch (err) {
-    res.writeHead(500);
-    res.end('Internal Server Error');
+http.createServer((req, res) => {
+  if (req.url === '/' || req.url === '/index.html') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(html);
+  } else if (req.url === '/script.js') {
+    res.writeHead(200, { 'Content-Type': 'application/javascript' });
+    res.end(js);
+  } else {
+    res.writeHead(404);
+    res.end('Not found');
   }
-};
-
-const server = http.createServer(requestListener);
-server.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+}).listen(process.env.PORT || 3000);
