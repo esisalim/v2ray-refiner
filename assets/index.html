@@ -1,23 +1,15 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>TLS Config Refiner</title>
+  <meta charset="UTF-8">
+  <title>TLS Config Refiner</title>
 </head>
 <body>
-    <h1>TLS Config Refiner</h1>
-    <form id="refinerForm">
-        <label for="config">Enter your proxy config (Vmess, Vless, Trojan):</label><br>
-        <textarea id="config" rows="4" cols="50">vmess://...</textarea><br><br>
-        <label for="cleanip">Clean IP Address (Please set your own):</label><br>
-        <input type="text" id="cleanip" value="1.2.3.4"><br><br>
-        <button type="button" onclick="refine()">Refine</button>
-    </form>
-    <h2>Refined Config:</h2>
-    <textarea id="result" rows="4" cols="50" readonly></textarea><br><br>
-    <button onclick="copyResult()">Copy</button>
-
-    <script src="script.js"></script>
+  <h1>TLS Config Refiner</h1>
+  <textarea id="config" placeholder="Paste your config here..."></textarea>
+  <br>
+  <button onclick="refine()">Refine</button>
+  <pre id="output"></pre>
+  <script src="/script.js"></script>
 </body>
 </html>
